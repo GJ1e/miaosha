@@ -1,6 +1,8 @@
 # 秒杀系统(demo)
 SpringBoot+Mybatis+Redis+RabbitMQ
 
+持续更新中。。。
+
 ---
 
 
