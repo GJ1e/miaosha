@@ -1,0 +1,45 @@
+package com.gj1e.miaosha.controller;
+
+import com.gj1e.miaosha.result.CodeMsg;
+import com.gj1e.miaosha.result.Result;
+import com.gj1e.miaosha.service.MiaoshaUserService;
+import com.gj1e.miaosha.vo.LoginVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.Valid;
+
+/**
+ * @Author GJ1e
+ * @Create 2019/12/17
+ * @Time 14:34
+ *
+ * 登录校验
+ */
+@Controller
+@RequestMapping("/login")
+public class LoginController {
+
+    @Autowired
+    MiaoshaUserService miaoshaUserService;
+
+    private static Logger log = LoggerFactory.getLogger(LoginController.class);
+
+    @RequestMapping("/to_login")
+    public String toLogin(){
+        return "login";
+    }
+
+    @RequestMapping("/do_login")
+    @ResponseBody
+    public Result<Boolean> doLogin(@Valid LoginVo loginVo){
+        log.info(loginVo.toString());
+        //登录
+        miaoshaUserService.login(loginVo);
+        return Result.success(true);
+    }
+}

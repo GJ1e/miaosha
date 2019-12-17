@@ -17,10 +17,19 @@ SpringBoot+Mybatis+Redis+RabbitMQ
 
 
 ## 项目笔记
-`@ConfigurationProperties(prefix="redis")`
-- 作用：读取配置文件，`prefix="redis""`代表读取配置文件中以Redis开头的属性。
+1. `@ConfigurationProperties(prefix="redis")`
+    - 作用：读取配置文件，`prefix="redis""`代表读取配置文件中以Redis开头的属性。
 
-
+2. thymeleaf引入静态文件方式
+    - @{/路径}
+3. `@ControllerAdvice`
+    - @ControllerAdvice 这是一个非常有用的注解，顾名思义，这是一个增强的Controller。
+    - 使用这个 Controller ，可以实现三个方面的功能：
+      1.全局异常处理 2.全局数据绑定 3.全局数据预处理
+    
+    - [详解](https://www.cnblogs.com/lenve/p/10748453.html)
+4. MD5校验踩坑
+    - 未总结完。。
 ## 项目进度
 1. 搭建项目环境以及框架（**完成**）
    - SpringBoot环境搭建
@@ -29,9 +38,15 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - 集成jedis+Redis安装+通用缓存Key封装
    
 2. 实现用户登录功能（**未完成**）
+   - 数据库设计(**完成**)
+   - 明文密码两次MD5校验(**完成**)
+   - JSR303参数检验+全局异常处理器(**完成**)
+   - 分布式Session(**未完成**)
+   
+3. 实现秒杀功能(**未完成**)
    - 数据库设计
-   - 明文密码两次MD5校验
-   - JSR303参数检验+全局异常处理器
-   - 分布式Session
+   - 商品列表页
+   - 商品详情页
+   - 订单详情页
 
 
