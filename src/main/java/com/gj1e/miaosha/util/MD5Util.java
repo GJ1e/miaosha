@@ -36,11 +36,11 @@ public class MD5Util {
         return dbPass;
     }
 
-    public static void main(String[] args) {    //5f1e93689cca76d818d1df7994a7bd0c
-        System.out.println(inputPassToFormPass("123456"));  //07fcadd3e27b63feda1681772d4844b3
-        System.out.println(formPassToDBPass("123456","1a2b3c4d"));
-        System.out.println(inputPasssToDBPass("123456","1a2b3c4d"));
-//        System.out.println(inputPasssToDBPass("123456","1a2b3c4d"));//5f1e93689cca76d818d1df7994a7bd0c
-    }
+//    public static void main(String[] args) {    //5f1e93689cca76d818d1df7994a7bd0c
+//        System.out.println(inputPassToFormPass("123456"));  //07fcadd3e27b63feda1681772d4844b3
+//        System.out.println(formPassToDBPass("123456","1a2b3c4d"));
+//        System.out.println(inputPasssToDBPass("123456","1a2b3c4d"));
+////        System.out.println(inputPasssToDBPass("123456","1a2b3c4d"));//5f1e93689cca76d818d1df7994a7bd0c
+//    }
 
 }
