@@ -9,6 +9,8 @@ import java.util.Date;
  * @Author GJ1e
  * @Create 2019/12/17
  * @Time 16:01
+ *
+ * 秒杀用户表
  */
 
 @Getter

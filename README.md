@@ -63,6 +63,16 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    
     ```
     
+5. Service要和Dao一一对应起来
+   - 如果需要引用其它的Dao进行操作，则引入其它相应的Service来调用需要的Dao。
+
+6. `@SelectKey`
+   - keyColum:数据库的列。
+   - keyProperty：domain对象中与数据库中的列对应的列。
+   - resultTyp：结果值。
+   - before：
+   - statement：
+   
 ## 项目进度
 1. 搭建项目环境以及框架（**完成**）
    - SpringBoot环境搭建
@@ -76,10 +86,12 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - JSR303参数检验+全局异常处理器
    - 分布式Session
    
-3. 实现秒杀功能(**未完成**)
+3. 实现秒杀功能(**完成**)
    - 数据库设计
    - 商品列表页
    - 商品详情页
    - 订单详情页
+
+4. JMeter压测工具学习(**未完成**)
 
 
