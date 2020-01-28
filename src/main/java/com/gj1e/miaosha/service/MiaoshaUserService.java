@@ -32,9 +32,39 @@ public class MiaoshaUserService {
     public static final String COOKIE_NAME_TOKEN = "token";
 
     public MiaoshaUser getById(Long id){
-        return miaoshaUserDao.getById(id);
+        //取缓存
+        MiaoshaUser miaoshaUser = redisService.get(MiaoshaUserKey.getById,""+id,MiaoshaUser.class);
+        if (miaoshaUser!=null){
+            return miaoshaUser;
+        }
+        //取数据库
+        miaoshaUser = miaoshaUserDao.getById(id);
+        if (miaoshaUser!=null){
+            redisService.set(MiaoshaUserKey.getById,""+id,MiaoshaUser.class);
+        }
+        return miaoshaUser;
     }
 
+    //修改密码
+    public Boolean updatePassword(String token, Long id,String passwordNew){
+        //取User
+        MiaoshaUser miaoshaUser = getById(id);
+        if (miaoshaUser==null){
+            throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
+        }
+        //更新数据库
+        MiaoshaUser toBeUpdate = new MiaoshaUser();
+        toBeUpdate.setId(id);
+        toBeUpdate.setPassword(MD5Util.formPassToDBPass(passwordNew,miaoshaUser.getSalt()));
+        miaoshaUserDao.update(toBeUpdate);
+
+        //更新缓存
+        redisService.del(MiaoshaUserKey.getById,""+id);
+        miaoshaUser.setPassword(toBeUpdate.getPassword());
+        redisService.set(MiaoshaUserKey.token,token,miaoshaUser);
+
+        return true;
+    }
     //从Redis中获取token
     public MiaoshaUser getByToken(HttpServletResponse response,String token) {
         if (StringUtils.isEmpty(token)){

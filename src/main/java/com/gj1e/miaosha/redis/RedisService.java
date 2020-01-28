@@ -20,6 +20,7 @@ public class RedisService {
     @Autowired
     JedisPool jedisPool;
 
+
     //Redis get方法 获取单个对象
     public <T> T get(KeyPrefix keyPrefix, String key, Class<T> clazz){
         Jedis jedis = null;
@@ -62,6 +63,20 @@ public class RedisService {
             returnToPool(jedis);    //关闭连接池
         }
 
+    }
+
+    //Redis del方法   删除一个Key
+    public Boolean del(KeyPrefix keyPrefix, String key){
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            //生成真正的Key
+            String realyKey = keyPrefix.getPrefix()+key;
+            long ret = jedis.del(realyKey);
+            return ret>0;
+        }finally {
+            returnToPool(jedis);
+        }
     }
 
     //Redis exists方法    判断Key是否存在

@@ -4,7 +4,10 @@ import com.gj1e.miaosha.dao.OrderDao;
 import com.gj1e.miaosha.domain.MiaoshaOrder;
 import com.gj1e.miaosha.domain.MiaoshaUser;
 import com.gj1e.miaosha.domain.OrderInfo;
+import com.gj1e.miaosha.redis.OrderKey;
+import com.gj1e.miaosha.redis.RedisService;
 import com.gj1e.miaosha.vo.GoodsVo;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +24,18 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
+    @Autowired
+    RedisService redisService;
     public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(long userId, long goodsId) {
-        return orderDao.getMiaoshaOrderByUserIdGoodsId(userId,goodsId);
+//        return orderDao.getMiaoshaOrderByUserIdGoodsId(userId,goodsId);
+
+        //从缓存中获取秒杀订单
+        return redisService.get(OrderKey.getMiaoshaOrderByUidGid,""+userId+"_"+goodsId,MiaoshaOrder.class);
+
+    }
+
+    public OrderInfo getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
     }
 
     //生成订单
@@ -46,6 +59,11 @@ public class OrderService {
         miaoshaOrder.setUserId(user.getId());
         orderDao.insertMiaoshaOrder(miaoshaOrder);//写入秒杀订单
 
+        //写入订单到缓存
+        redisService.set(OrderKey.getMiaoshaOrderByUidGid,""+user.getId()+"_"+goodsVo.getId(),miaoshaOrder);
+
         return orderInfo;
     }
+
+
 }

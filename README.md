@@ -15,6 +15,8 @@ SpringBoot+Mybatis+Redis+RabbitMQ
 
 [Mybatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
+[JMeter官网](https://jmeter.apache.org/)
+[JMeter用户手册](https://jmeter.apache.org/usermanual/index.html)
 
 ## 项目笔记
 1. `@ConfigurationProperties(prefix="redis")`
@@ -73,6 +75,17 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - before：
    - statement：
    
+7. Thymeleaf页面缓存
+   - ThymeleafViewResolver
+   
+8. POST与GET区别
+   - GET 具有幂等性，POST不具有幂等性
+   
+9. 商品超卖的解决方法
+   1. 在减少商品数量的SQL语句中增加限制条件“goodsNum>0”。
+   2. 在数据库的秒杀订单中添加唯一索引，防止一个用户重复秒杀的商品。
+
+   
 ## 项目进度
 1. 搭建项目环境以及框架（**完成**）
    - SpringBoot环境搭建
@@ -92,6 +105,11 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - 商品详情页
    - 订单详情页
 
-4. JMeter压测工具学习(**未完成**)
+4. JMeter压测工具学习(**完成**)
 
+5. 页面优化(**完成**)
+   - 页面缓存+URL缓存+对象缓存
+   - 页面静态化，前后端分离
+
+6. 秒杀接口优化(**未完成**)
 

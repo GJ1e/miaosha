@@ -1,6 +1,5 @@
 package com.gj1e.miaosha.controller;
 
-import com.gj1e.miaosha.result.CodeMsg;
 import com.gj1e.miaosha.result.Result;
 import com.gj1e.miaosha.service.MiaoshaUserService;
 import com.gj1e.miaosha.vo.LoginVo;
