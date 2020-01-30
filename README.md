@@ -1,7 +1,9 @@
-# 秒杀系统(demo)
+# 秒杀系统
 SpringBoot+Mybatis+Redis+RabbitMQ
 
 持续更新中。。。
+
+如果对本项目有任何疑问或者想法，欢迎加本人QQ：825843207进行讨论。
 
 ---
 
@@ -35,7 +37,7 @@ SpringBoot+Mybatis+Redis+RabbitMQ
     - [详解](https://www.cnblogs.com/lenve/p/10748453.html)
 
 04. MD5校验踩坑
-    ```java
+```java
     后端MD5生成代码：
     private static final String salt = "1a2b3c4d";
     
@@ -64,8 +66,8 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    
    前端：var str = salt.charAt(1)+salt.charAt(3)+inputPass+salt.charAt(0);
    等价于后端：String formPass = ""+salt.charAt(1)+salt.charAt(3)+inputPass+salt.charAt(0);
-   
-    ```
+
+```
     
 05. Service要和Dao一一对应起来
    - 如果需要引用其它的Dao进行操作，则引入其它相应的Service来调用需要的Dao。
@@ -84,16 +86,18 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - GET 具有幂等性，POST不具有幂等性
    
 09. **商品超卖的解决方法**
-   1. 在减少商品数量的SQL语句中增加限制条件“goodsNum>0”。
-   2. 在数据库的秒杀订单中添加唯一索引，防止一个用户重复秒杀的商品。
+    1. 在减少商品数量的SQL语句中增加限制条件“goodsNum>0”。
+    2. 在数据库的秒杀订单中添加唯一索引，防止一个用户重复秒杀的商品。
 
 10. 秒杀接口优化思路
-   **重点：** 减少数据库访问
-   1. 把商品库存数量预先加载到Redis中
-   2. 收到请求Redis预减库存，库存足够，进入3。否则，直接返回秒杀失败。
-   3. 请求入队列，异步下单。
-   4. 请求出队列，生成订单，减少库存。
-   5. 客户端轮询是否秒杀成功。
+    **重点:减少数据库访问**
+    1. 把商品库存数量预先加载到Redis中。
+    2. 内存标记，减少Redis的访问次数。
+    3. 收到请求Redis预减库存，库存足够，进入3。否则，直接返回秒杀失败。
+    4. 请求入队列，异步下单。
+    5. 请求出队列，生成订单，减少库存。
+    
+    
 ## 项目进度
 1. 搭建项目环境以及框架（**完成**）
    - SpringBoot环境搭建
