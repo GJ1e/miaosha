@@ -51,11 +51,11 @@ public class OrderService {
         orderInfo.setOrderChannel(1); //下单渠道
         orderInfo.setStatus(0);//订单状态
         orderInfo.setUserId(user.getId());
-        long orderId = orderDao.insert(orderInfo);//写入普通订单
+        orderDao.insert(orderInfo);//写入普通订单
 
         MiaoshaOrder miaoshaOrder = new MiaoshaOrder();
         miaoshaOrder.setGoodsId(goodsVo.getId());
-        miaoshaOrder.setOrderId(orderId);
+        miaoshaOrder.setOrderId(orderInfo.getId());
         miaoshaOrder.setUserId(user.getId());
         orderDao.insertMiaoshaOrder(miaoshaOrder);//写入秒杀订单
 

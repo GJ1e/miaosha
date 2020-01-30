@@ -13,26 +13,28 @@ SpringBoot+Mybatis+Redis+RabbitMQ
 
 [Redis](https://redis.io/)
 
+[RabbitMQ](https://www.rabbitmq.com/)
+
 [Mybatis](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/)
 
 [JMeter官网](https://jmeter.apache.org/)
 [JMeter用户手册](https://jmeter.apache.org/usermanual/index.html)
 
 ## 项目笔记
-1. `@ConfigurationProperties(prefix="redis")`
+01. `@ConfigurationProperties(prefix="redis")`
     - 作用：读取配置文件，`prefix="redis""`代表读取配置文件中以Redis开头的属性。
 
-2. thymeleaf引入静态文件方式
+02. thymeleaf引入静态文件方式
     - @{/路径}
 
-3. `@ControllerAdvice`
+03. `@ControllerAdvice`
     - @ControllerAdvice 这是一个非常有用的注解，顾名思义，这是一个增强的Controller。
     - 使用这个 Controller ，可以实现三个方面的功能：
       1.全局异常处理 2.全局数据绑定 3.全局数据预处理
     
     - [详解](https://www.cnblogs.com/lenve/p/10748453.html)
 
-4. MD5校验踩坑
+04. MD5校验踩坑
     ```java
     后端MD5生成代码：
     private static final String salt = "1a2b3c4d";
@@ -65,27 +67,33 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    
     ```
     
-5. Service要和Dao一一对应起来
+05. Service要和Dao一一对应起来
    - 如果需要引用其它的Dao进行操作，则引入其它相应的Service来调用需要的Dao。
 
-6. `@SelectKey`
+06. `@SelectKey`
    - keyColum:数据库的列。
    - keyProperty：domain对象中与数据库中的列对应的列。
    - resultTyp：结果值。
    - before：
    - statement：
    
-7. Thymeleaf页面缓存
+07. Thymeleaf页面缓存
    - ThymeleafViewResolver
    
-8. POST与GET区别
+08. POST与GET区别
    - GET 具有幂等性，POST不具有幂等性
    
-9. 商品超卖的解决方法
+09. **商品超卖的解决方法**
    1. 在减少商品数量的SQL语句中增加限制条件“goodsNum>0”。
    2. 在数据库的秒杀订单中添加唯一索引，防止一个用户重复秒杀的商品。
 
-   
+10. 秒杀接口优化思路
+   **重点：** 减少数据库访问
+   1. 把商品库存数量预先加载到Redis中
+   2. 收到请求Redis预减库存，库存足够，进入3。否则，直接返回秒杀失败。
+   3. 请求入队列，异步下单。
+   4. 请求出队列，生成订单，减少库存。
+   5. 客户端轮询是否秒杀成功。
 ## 项目进度
 1. 搭建项目环境以及框架（**完成**）
    - SpringBoot环境搭建
@@ -111,5 +119,9 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - 页面缓存+URL缓存+对象缓存
    - 页面静态化，前后端分离
 
-6. 秒杀接口优化(**未完成**)
+6. 秒杀接口优化(**完成**)
+   - Redis预减库存减少数据库访问
+   - 内存标记减少Redis访问
+   - 利用RabbitMQ缓冲用户请求，异步下单
+   - 客户端轮询，是否秒杀成功
 

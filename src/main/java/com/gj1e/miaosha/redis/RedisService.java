@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
-import java.security.Key;
 
 /**
  * @Author GJ1e
@@ -71,8 +70,8 @@ public class RedisService {
         try{
             jedis = jedisPool.getResource();
             //生成真正的Key
-            String realyKey = keyPrefix.getPrefix()+key;
-            long ret = jedis.del(realyKey);
+            String realKey = keyPrefix.getPrefix()+key;
+            long ret = jedis.del(realKey);
             return ret>0;
         }finally {
             returnToPool(jedis);
@@ -80,7 +79,7 @@ public class RedisService {
     }
 
     //Redis exists方法    判断Key是否存在
-    public <T> Boolean exists(KeyPrefix keyPrefix, Key key){
+    public <T> Boolean exists(KeyPrefix keyPrefix, String key){
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -95,7 +94,7 @@ public class RedisService {
     }
 
     //Redis incr方法  增加Key的值
-    public <T> Long incr(KeyPrefix keyPrefix, Key key){
+    public <T> Long incr(KeyPrefix keyPrefix, String key){
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -110,7 +109,7 @@ public class RedisService {
     }
 
     //Redis decr方法  减少Key的值
-    public <T> Long decr(KeyPrefix keyPrefix, Key key){
+    public <T> Long decr(KeyPrefix keyPrefix, String key){
         Jedis jedis = null;
         try {
             jedis = jedisPool.getResource();
@@ -124,7 +123,7 @@ public class RedisService {
 
     }
     //bean对象转换成字符串
-    private <T> String beanToString(T value) {
+    public static<T> String beanToString(T value) {
         if (value==null)
             return null;
 
@@ -143,7 +142,7 @@ public class RedisService {
 
     //字符串转成Bean对象
     @SuppressWarnings("unchecked")
-    private <T> T stringToBean(String str, Class<T> clazz) {
+    public static<T> T stringToBean(String str, Class<T> clazz) {
         if (str==null || str.length()<=0 || clazz==null)
             return null;
 
@@ -165,7 +164,4 @@ public class RedisService {
             jedis.close();
         }
     }
-
-
-
 }

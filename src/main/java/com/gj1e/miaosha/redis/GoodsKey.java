@@ -12,4 +12,5 @@ public class GoodsKey extends BasePrefix {
 
     public static GoodsKey getGoodsList = new GoodsKey(60,"gl"); //页面缓存60秒
     public static GoodsKey getGoodsDetail = new GoodsKey(60,"gd"); //页面缓存60秒
+    public static GoodsKey getMiaoshaGoodsStock = new GoodsKey(0,"gs"); //0表示永不过期
 }

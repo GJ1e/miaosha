@@ -127,40 +127,6 @@ public class GoodsController {
     }
 
 
-//    @RequestMapping(value = "/detail/{goodsId}")
-//    @ResponseBody
-//    public Result<GoodsDetailVo> detail(HttpServletRequest request, HttpServletResponse response, Model model,
-//                                         MiaoshaUser user, @PathVariable("goodsId") long goodsId) {
-//
-//        GoodsVo goods = goodsService.getGoodsVoByGoodsId(goodsId);
-//        //获取秒杀的开始和结束时间
-//        Long startAt = goods.getStartDate().getTime();
-//        Long endAt = goods.getEndDate().getTime();
-//        Long now = System.currentTimeMillis();
-//
-//        //查看秒杀状态
-//        int miaoshaStatus = 0;//秒杀状态
-//        int remainSeconds = 0; //秒杀剩余时间
-//        if (now < startAt) {//秒杀没开始，
-//            miaoshaStatus = 0;
-//            remainSeconds = (int) (startAt - now);
-//        } else if (now > endAt) { //秒杀结束
-//            miaoshaStatus = 2;
-//            remainSeconds = -1;
-//        } else {
-//            //秒杀进行中
-//            miaoshaStatus = 1;
-//            remainSeconds = 0;
-//        }
-//
-//        GoodsDetailVo goodsDetailVo = new GoodsDetailVo();
-//        goodsDetailVo.setGoodsVo(goods);
-//        goodsDetailVo.setMiaoshaUser(user);
-//        goodsDetailVo.setRemainSeconds(remainSeconds);
-//        goodsDetailVo.setMiaoshaStatus(miaoshaStatus);
-//
-//        return Result.success(goodsDetailVo);
-//    }
 
     @RequestMapping(value="/detail/{goodsId}")
     @ResponseBody

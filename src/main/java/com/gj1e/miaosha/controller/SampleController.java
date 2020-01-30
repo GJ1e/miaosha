@@ -1,6 +1,7 @@
 package com.gj1e.miaosha.controller;
 
 import com.gj1e.miaosha.domain.User;
+import com.gj1e.miaosha.rabbitmq.MQSender;
 import com.gj1e.miaosha.redis.RedisService;
 import com.gj1e.miaosha.redis.UserKey;
 import com.gj1e.miaosha.result.CodeMsg;
@@ -23,10 +24,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class SampleController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
     @Autowired
-    private RedisService redisService;
+    RedisService redisService;
+
+    @Autowired
+    MQSender sender;
 
     @RequestMapping("/thymeleaf")
     public String thymeleaf(Model model){
@@ -40,6 +44,27 @@ public class SampleController {
     public Result<String> hello(){
         return Result.success("hello world");
     }
+
+//    @RequestMapping("/mq")
+//    @ResponseBody
+//    public Result<String> mq(){
+//        sender.send("Hello GJ1e");
+//        return Result.success("hello world");
+//    }
+//
+//    @RequestMapping("/mq/topic")
+//    @ResponseBody
+//    public Result<String> topic(){
+//        sender.sendTopic("Hello GJ1e");
+//        return Result.success("hello world");
+//    }
+//
+//    @RequestMapping("/mq/fanout")
+//    @ResponseBody
+//    public Result<String> fanout(){
+//        sender.sendFanout("Hello GJ1e");
+//        return Result.success("hello world");
+//    }
 
     @RequestMapping("/helloError")
     @ResponseBody
