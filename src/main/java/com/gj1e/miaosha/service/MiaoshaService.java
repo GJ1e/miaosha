@@ -1,12 +1,10 @@
 package com.gj1e.miaosha.service;
 
-import com.gj1e.miaosha.domain.Goods;
 import com.gj1e.miaosha.domain.MiaoshaOrder;
 import com.gj1e.miaosha.domain.MiaoshaUser;
 import com.gj1e.miaosha.domain.OrderInfo;
 import com.gj1e.miaosha.redis.MiaoshaKey;
 import com.gj1e.miaosha.redis.RedisService;
-import com.gj1e.miaosha.result.Result;
 import com.gj1e.miaosha.util.MD5Util;
 import com.gj1e.miaosha.util.UUIDUtil;
 import com.gj1e.miaosha.vo.GoodsVo;
@@ -60,12 +58,12 @@ public class MiaoshaService {
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(userId,goodsId);
         if (order != null){ //秒杀成功
             return order.getOrderId();
-        }else {
-            boolean isOver = getGoodsOver(goodsId);
+        }else { //判断秒杀失败的原因
+            boolean isOver = getGoodsOver(goodsId); //商品是否售完
             if (isOver){
-                return -1;
+                return -1;  //秒杀失败
             }else {
-                return 0;
+                return 0;   //请求未处理完成，继续轮询。
             }
         }
     }
@@ -110,6 +108,12 @@ public class MiaoshaService {
         return str;
     }
 
+    /**
+     * 生成验证码图片
+     * @param user
+     * @param goodsId
+     * @return
+     */
     public BufferedImage createVerifyCode(MiaoshaUser user, long goodsId) {
         if (user==null || goodsId<=0){
             return null;

@@ -46,7 +46,7 @@ public class MQReceiver {
         if (stock <= 0){    //没有库存则秒杀失败
             return;
         }
-
+        //这一步可以省略
         //判断是否重复秒杀
         MiaoshaOrder miaoshaOrder = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(),goodsId);
         if (miaoshaOrder != null){

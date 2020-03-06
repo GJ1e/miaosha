@@ -5,7 +5,6 @@ import com.gj1e.miaosha.domain.MiaoshaOrder;
 import com.gj1e.miaosha.domain.MiaoshaUser;
 import com.gj1e.miaosha.rabbitmq.MQSender;
 import com.gj1e.miaosha.rabbitmq.MiaoshaMessage;
-import com.gj1e.miaosha.redis.AccessKey;
 import com.gj1e.miaosha.redis.GoodsKey;
 import com.gj1e.miaosha.redis.RedisService;
 import com.gj1e.miaosha.result.CodeMsg;
@@ -21,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
@@ -64,6 +62,7 @@ public class MiaoshaController implements InitializingBean {
 
         for (GoodsVo goods : goodsList) {
             redisService.set(GoodsKey.getMiaoshaGoodsStock, "" + goods.getId(), goods.getStockCount());
+            //这一步是做一个商品库存的内存标记。
             localOverMap.put(goods.getId(), false);
         }
     }
@@ -109,7 +108,7 @@ public class MiaoshaController implements InitializingBean {
             localOverMap.put(goodsId, true);
             return Result.error(CodeMsg.MIAOSHA_OVER);
         }
-
+        //这一步可以省略，因为有数据库唯一索引。
         //判断是否秒杀到了，从订单表里判断
         MiaoshaOrder miaoshaOrder = orderService.getMiaoshaOrderByUserIdGoodsId(user.getId(), goodsId);
         if (miaoshaOrder != null) {
