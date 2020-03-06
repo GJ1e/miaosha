@@ -1,4 +1,4 @@
-# 秒杀系统
+# Java秒杀系统
 SpringBoot+Mybatis+Redis+RabbitMQ
 
 项目已完结，知识点整理中。。。
@@ -21,6 +21,12 @@ SpringBoot+Mybatis+Redis+RabbitMQ
 
 [JMeter官网](https://jmeter.apache.org/)
 [JMeter用户手册](https://jmeter.apache.org/usermanual/index.html)
+
+
+## 秒杀接口的基本流程图
+![秒杀接口的基本流程图](./src/doc/images/秒杀接口基本思路.jpg)
+
+
 
 ## 项目笔记
 01. `@ConfigurationProperties(prefix="redis")`
@@ -80,7 +86,7 @@ SpringBoot+Mybatis+Redis+RabbitMQ
    - statement：
    
 07. Thymeleaf页面缓存
-   - ThymeleafViewResolver
+   - `ThymeleafViewResolver`
    
 08. POST与GET区别
    - GET 具有幂等性，POST不具有幂等性
